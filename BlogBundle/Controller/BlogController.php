@@ -114,8 +114,6 @@ class BlogController extends Controller
 		//On ne peut pas définir ni la date ni la publication,
 		//car ces attributs sont définis automatiquement dans le constructeur.
 
-		//var_dump($article);
-
 		//On récupère l'entity manager
 		$em = $this->getDoctrine()->getManager();
 
