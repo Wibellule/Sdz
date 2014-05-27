@@ -1,0 +1,23 @@
+{# src/Sdz/BlogBundle/Resources/views/Blog/modifier.html.twig #}
+
+{% extends "SdzBlogBundle::layout.html.twig" %}
+
+{% block title %}
+	Modifier un article - {{ parent() }}
+{% endblock %}
+   
+{% block sdzblog_body %}
+
+    <h2>Modifier un article</h2>
+        
+    {% include "SdzBlogBundle:Blog:formulaire.html.twig" %}
+
+    <p>
+    	Vous éditez un article
+    </p>
+        
+	<p>
+		<a href="{{ path('sdzblog_voir', {'id':article.id}) }}" class="btn"><i class="icon-chevron-left"></i>Retour à la liste</a>
+	</p>
+		
+{% endblock %}
