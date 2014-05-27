@@ -19,18 +19,7 @@ class BlogController extends Controller
 	 */
     public function indexAction()
     {
-    	//On fixera un id au hasard ici, il sera dynamique par la suite, évidemment
-    	//$id = 5;
-		
-		//On veut avoir l'url de l'article d'id $id
-		/*$url = $this->generateUrl(
-			'sdzblog_voir', 
-			array('id' => $id),
-			true //Pour l'url absolue pour l'envoi de mail
-		);
-		// $url vaut " /blog/article/5"
-		//On redirige vers cette url ( pour l'exemple )
-        return $this->redirect($url);*/
+    	
 
         //Récupération du service Doctrine $doctrine = $this->getDoctrine();
         //Récupération de l'entityManager $em = $this->getDoctrine()->getManager(); ou $this->get('doctrine.orm.entity_manager');
@@ -61,18 +50,6 @@ class BlogController extends Controller
 		}
 
         //Fin articles
-        
-        //à enlever après
-        //if( !$page ){ $page = 1; }
-		
-		
-        //on ne sait pas combien de page il y aura mais on sait qu'une page doit être supérieure à 1
-        //if( $page < 1)
-        //{
-        	//On déclenche une exception NotFoundHttpException
-        	//Cela va afficher la page d'erreur 404 que l'on pourra personnaliser plus tard
-        	//throw $this->createNotFoundException('Page inexistante (page = '.$page.' )');
-        //}
 		
 		//Ici on récupèrera la liste des articles pour la transmettre au template
 		
@@ -91,29 +68,12 @@ class BlogController extends Controller
 	 */
 	public function voirAction($id)
 	{
-		//return new Response("Affichage de l'article d'id: ".$id.".");
-		
-		//Récupération du service
-		/**$templating = $this->get('templating');
-		//On récupère le contenu de notre template
-		$contenu = $templating->render(
-			'SdzBlogBundle:Blog:voir.html.twig',
-			array('id' => $id)	
-		);
-		//On crée une réponse avec ce contenu et on la retourne
-		return new Response($contenu);**/
 		
 		//on récupère le répository
 		$repository = $this->getDoctrine()
 						   ->getManager()
 						   ->getRepository('SdzBlogBundle:Article');
 
-		// Ou
-	    /** 
-		 * $article = $this->getDoctrine()
-		 *			   	   ->getManager()
-		 *				   ->find('SdzBlogBundle:Article', $id);
-		 */
 
 	    //On récupère l'entité correspondant à l'id $id
 	    $article = $repository->find($id);
@@ -161,11 +121,6 @@ class BlogController extends Controller
 
 		//Etape 1 : on persiste l'entité
 		$em->persist($article1);
-
-		//$article2 = $em->getRepository('SdzBlogBundle:Article')->find(3);
-
-		//On modifie cet article en changeant la date à la date d'aujourd'hui
-		//$article2->setDate(new \Datetime());
 
 		//Ici pas besoin de faire un persist, comme on a déjà l'article Doctrine sait comment le gérer.
 
