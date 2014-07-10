@@ -40,7 +40,7 @@ class BlogController extends Controller
         //Récupération de l'entityManager $em = $this->getDoctrine()->getManager(); ou $this->get('doctrine.orm.entity_manager');
         //Accès au répository_article $repository_article = $em->getRepository('SdzBlogBundle:Article');
 
-        $text = "gyome34@hotmail.com, guillaume.cornu@orange.com";
+        $text = "test@test.com";
 
         //On récupère le service
         $antispam = $this->container->get('sdz_blog.antispam');
