@@ -17,7 +17,6 @@ class Article
     {
         $this->date = new \DateTime();
         $this->publication = true;
-        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -268,7 +267,7 @@ class Article
     public function addCommentaire(\Sdz\BlogBundle\Entity\Commentaire $commentaires)
     {
         $this->commentaires[] = $commentaires;
-        $commentaires->setArticle($this);
+    
         return $this;
     }
 
@@ -280,8 +279,6 @@ class Article
     public function removeCommentaire(\Sdz\BlogBundle\Entity\Commentaire $commentaires)
     {
         $this->commentaires->removeElement($commentaires);
-        // Et si notre relation était facultative (nullable=true, ce qui n'est pas notre cas)
-        // $commentaire->setArticle(null);
     }
 
     /**

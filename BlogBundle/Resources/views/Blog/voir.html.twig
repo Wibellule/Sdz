@@ -15,9 +15,32 @@
 	<h2>{{ article.titre }}</h2>
 	<i>Par {{ article.auteur }}, le {{ article.date|date('d/m/Y') }}</i>
 
+    {% if article.categories.count > 0 %}
+        - Catégories :
+        {% for categorie in article.categories %}
+            {{ categorie.nom }}
+            {% if not loop.last %} - {% endif %}
+        {% endfor %}
+    {% endif %}
+
 	<div class="well">
 		{{ article.contenu }}
 	</div>
+
+    {% if liste_articleCompetence | length > 0 %}
+        <div>
+            Compétences utilisées dans cette article :
+            <ul>
+                {% for articleCompetence in liste_articleCompetence %}
+                    <li>{{ articleCompetence.competence.nom }} : {{ articleCompetence.niveau }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="well">
+        <h3>Commentaires</h3>
+    </div>
 
 	<p>
 		<a href="{{ path('sdzblog_accueil') }}" class="btn"><i class="icon-chevron-left"></i>Retour à la liste</a>
