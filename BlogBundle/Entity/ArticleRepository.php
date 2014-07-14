@@ -87,10 +87,11 @@ class ArticleRepository extends EntityRepository
         return $qb;
     }
     
-    public function myFindAllDQL()
+    public function myFindAllDQL($id)
     {
-        $query = $this->_em->createQuery("SELECT a FROM SdzBlogBundle:Article a");
-        $resultats = $query->getResult();
-        return $resultats;
+        $query = $this->_em->createQuery("SELECT a FROM SdzBlogBundle:Article a WHERE a.id = :id");
+        $query->setParameter('id', $id);
+        // Utilisation de getSingleResult() car la requête ne doit retourner qu'un seul résultat
+        return $query->getSingleResult();
     }
 }
