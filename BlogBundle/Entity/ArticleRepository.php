@@ -86,4 +86,11 @@ class ArticleRepository extends EntityRepository
 
         return $qb;
     }
+    
+    public function myFindAllDQL()
+    {
+        $query = $this->_em->createQuery("SELECT a FROM SdzBlogBundle:Article a");
+        $resultats = $query->getResult();
+        return $resultats;
+    }
 }
