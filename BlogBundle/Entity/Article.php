@@ -324,4 +324,12 @@ class Article
     {
         return $this->dateEdition;
     }
+    
+    /**
+     * @ORM\PreUpdate
+     */
+    public function updateDate()
+    {
+        $this->setDateEdition(new \DateTime());
+    }
 }
