@@ -5,6 +5,7 @@
 namespace Sdz\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Article
@@ -95,6 +96,12 @@ class Article
      * @ORM\Column(name="nbCommentaires", type="integer")
      */
     private $nbCommentaires;
+
+    /**
+     * @Gedmo\Slug(fields={"titre"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     /**
      * Get id
@@ -363,5 +370,28 @@ class Article
     public function getNbCommentaires()
     {
         return $this->nbCommentaires;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Article
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
