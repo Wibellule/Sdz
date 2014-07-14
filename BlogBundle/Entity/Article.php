@@ -1,5 +1,7 @@
 <?php
 
+// src/Sdz/BlogBundle/Entity/Article
+
 namespace Sdz\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -86,6 +88,13 @@ class Article
      * @ORM\Column(name="dateEdition", type="datetime")
      */
     private $dateEdition;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbCommentaires", type="integer")
+     */
+    private $nbCommentaires;
 
     /**
      * Get id
@@ -324,12 +333,35 @@ class Article
     {
         return $this->dateEdition;
     }
-    
+
     /**
      * @ORM\PreUpdate
      */
     public function updateDate()
     {
         $this->setDateEdition(new \DateTime());
+    }
+
+    /**
+     * Set nbCommentaires
+     *
+     * @param integer $nbCommentaires
+     * @return Article
+     */
+    public function setNbCommentaires($nbCommentaires)
+    {
+        $this->nbCommentaires = $nbCommentaires;
+    
+        return $this;
+    }
+
+    /**
+     * Get nbCommentaires
+     *
+     * @return integer 
+     */
+    public function getNbCommentaires()
+    {
+        return $this->nbCommentaires;
     }
 }
