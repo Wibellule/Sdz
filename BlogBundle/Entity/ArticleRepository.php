@@ -12,4 +12,29 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
+  public function myFindAll()
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+
+        // Méthode équivalente, mais plus longue :
+        $queryBuilder = $this->_em
+            ->createQueryBuilder()
+            ->select('a')
+            ->from($this->_entityName, 'a');
+
+        // Dans un repository, $this->_entityName est le namespace de l'entité gérée
+        // Ici il vaut donc Sdz\BlogBundle\Entity\Article
+
+        // On a fini de construire notre requête
+
+        // On récupère la Query à partir de QueryBuilder
+        $query = $queryBuilder->getQuery();
+
+        // On récupère les résultats à partir de la query
+        $resultats = $query->getResult();
+
+        // On retourne ces résultats
+        return $resultats;
+
+    }
 }
