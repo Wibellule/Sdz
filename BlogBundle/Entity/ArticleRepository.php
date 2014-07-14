@@ -37,4 +37,17 @@ class ArticleRepository extends EntityRepository
         return $resultats;
 
     }
+    
+    public function myFindOne($id)
+    {
+        // On passe par le QueryBuilder vide de l'EntityManager pour l'exemple
+        $qb = $this->_em->createQueryBuilder();
+
+        $qb->select('a')
+           ->from('SdzBlogBundle:Article', 'a')
+           ->where('a.id = :id')
+           ->setParameter('id', $id);
+
+        return $qb->getQuery()->getResult();
+    }
 }
