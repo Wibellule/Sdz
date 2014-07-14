@@ -17,13 +17,24 @@ class ArticleRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('a');
 
         // Méthode équivalente, mais plus longue :
-        $queryBuilder = $this->_em
-            ->createQueryBuilder()
-            ->select('a')
-            ->from($this->_entityName, 'a');
+        /**  $queryBuilder $queryBuilder = $this->_em
+         *   ->createQueryBuilder()
+         *   ->select('a')
+         *   ->from($this->_entityName, 'a');
+         */
 
         // Dans un repository, $this->_entityName est le namespace de l'entité gérée
         // Ici il vaut donc Sdz\BlogBundle\Entity\Article
+
+        // On ajoute ce que l'on veut
+        $queryBuilder->where('a.auteur = :auteur')
+                    ->setParameter('auteur', 'wibellule');
+
+        // On applique notre condition
+        $queryBuilder = $this->whereCurrentYear($queryBuilder);
+
+        // On peut mettre ce que l'on veut après
+        $queryBuilder->orderBy('a.date', 'DESC')
 
         // On a fini de construire notre requête
 
