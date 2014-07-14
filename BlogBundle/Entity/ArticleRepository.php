@@ -66,4 +66,13 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
 
     }
+    
+    public function whereCurrentYear(\Doctrine\ORM\QueryBuilder $qb)
+    {
+        $qb->andWhere('a.date BETWEEN :debut AND :fin')
+            ->setParameter('debut', new \DateTime(date('Y').'-01-01')) // Date entre le 1er janvier de cette année
+            ->setParameter('fin', new \DateTime(date('Y').'-12-31')); // Et le 31 décembre de cette année
+
+        return $qb;
+    }
 }
