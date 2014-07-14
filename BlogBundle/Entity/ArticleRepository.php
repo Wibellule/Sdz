@@ -50,4 +50,20 @@ class ArticleRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+    
+    public function findByAuteurAndDate($auteur, $annee)
+    {
+        // On utilise le QueryBuilder crée par le repository directement pour gagner du temps
+        // Plus besoin de faire le select() ne le from() par la suite
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->where('a.auteur = :auteur')
+            ->setParameter('auteur', $auteur)
+           ->andWhere('a.date < :annee')
+            ->setParameter('annee', $annee)
+           ->orderBy('a.date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+
+    }
 }
