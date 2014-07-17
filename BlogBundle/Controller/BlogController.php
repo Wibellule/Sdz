@@ -17,16 +17,6 @@ class BlogController extends Controller
 {
     public function indexAction($page)
     {
-        // On ne sait pas combien de pages il y a
-        // Mais on sait qu'une page doit être supérieure ou égale à 1
-        // Bien sûr pour le moment on ne se sert pas (encore !) de cette variable
-        if ($page < 1) {
-            // On déclenche une exception NotFoundHttpException
-            // Cela va afficher la page d'erreur 404
-            // On pourra la personnaliser plus tard
-            throw $this->createNotFoundException('Page inexistante (page = '.$page.')');
-        }
-
         // Pour récupérer la liste de tous les articles : on utilise findAll()
         $articles = $this->getDoctrine()
             ->getManager()
