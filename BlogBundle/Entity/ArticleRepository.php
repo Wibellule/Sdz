@@ -94,4 +94,28 @@ class ArticleRepository extends EntityRepository
         // Utilisation de getSingleResult() car la requête ne doit retourner qu'un seul résultat
         return $query->getSingleResult();
     }
+    
+    public function getArticles($nombrePerPage, $page)
+    {
+        // On déplace la vérification du numéro de page dans cette méthode
+        if ($page < 1)
+        {
+            throw new \InvalidArgumentException('L\'argument $page ne peut être inférieur à 1 (valeur : "'.$page.'").');
+        }
+
+        $query = $this->createQueryBuilder('a')
+                      ->leftJoin('a.image', 'i')
+                        ->addSelect('i')
+                      ->leftJoin('a.categories', 'c')
+                        ->addSelect('c')
+                      ->orderBy('a.date', 'DESC')
+                      ->getQuery();
+
+        // On définit l'article à partir duquel commencer la liste
+        $query->setFirstResult(($age-1) * $nombrePerPage)
+        // Ainsi que le nombre d'articles à afficher
+              ->setMaxResults($nombrePerPage);
+
+        return new Paginator($query);
+    }
 }
