@@ -112,7 +112,7 @@ class ArticleRepository extends EntityRepository
                       ->getQuery();
 
         // On définit l'article à partir duquel commencer la liste
-        $query->setFirstResult(($age-1) * $nombrePerPage)
+        $query->setFirstResult(($page-1) * $nombrePerPage)
         // Ainsi que le nombre d'articles à afficher
               ->setMaxResults($nombrePerPage);
 
