@@ -19,9 +19,9 @@ class BlogController extends Controller
     {
         // Pour récupérer la liste de tous les articles : on utilise findAll()
         $articles = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('SdzBlogBundle:Article')
-            ->findAll();
+                         ->getManager()
+                         ->getRepository('SdzBlogBundle:Article')
+                         ->getArticles();
 
         // L'appel de la vue ne change pas
         return $this->render('SdzBlogBundle:Blog:index.html.twig', array(
