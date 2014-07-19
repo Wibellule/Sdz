@@ -4,7 +4,6 @@
 
 namespace Sdz\BlogBundle\Controller;
 
-use Sdz\BlogBundle\Entity\Commentaire;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
