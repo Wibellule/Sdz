@@ -34,7 +34,7 @@ class ArticleRepository extends EntityRepository
         $queryBuilder = $this->whereCurrentYear($queryBuilder);
 
         // On peut mettre ce que l'on veut après
-        $queryBuilder->orderBy('a.date', 'DESC')
+        $queryBuilder->orderBy('a.date', 'DESC');
 
         // On a fini de construire notre requête
 
