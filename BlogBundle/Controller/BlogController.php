@@ -7,9 +7,6 @@ namespace Sdz\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sdz\BlogBundle\Entity\Article;
-use Sdz\BlogBundle\Entity\Image;
-use Sdz\BlogBundle\Entity\ArticleCompetence;
-
 
 class BlogController extends Controller
 {
