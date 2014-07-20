@@ -49,19 +49,64 @@ class BlogController extends Controller
 
     public function ajouterAction()
     {
-        // La gestion d'un formulaire est particulière, mais l'idée est la suivante :
+        // On crée un nouvel objet Article
+        $article = new Article();
+        $article->setDateEdition(new \DateTime());
+        $article->setNbCommentaires(0);
 
-        if ($this->get('request')->getMethod() == 'POST') {
-            // Ici, on s'occupera de la création et de la gestion du formulaire
+        // On crée le FormBuilder grâce à la méthode du controleur
+        $formBuilder = $this->createFormBuilder($article);
 
-            $this->get('session')->getFlashBag()->add('info', 'Article bien enregistré');
+        // On ajoute les champs de l'entité que l'on veut à notre formulaire
+        $formBuilder
+            ->add('date',           'date')
+            ->add('titre',          'text')
+            ->add('contenu',        'textarea')
+            ->add('auteur',         'text')
+            ->add('publication',    'checkbox', array('required' => false));
 
-            // Puis on redirige vers la page de visualisation de cet article
-            return $this->redirect( $this->generateUrl('sdzblog_voir', array('id' => 1)) );
+        // A partir du formBuilder, on génère le formulaire
+        $form = $formBuilder->getForm();
+
+        // On récupère la requête
+        $request = $this->getRequest();
+
+        // On vérifie qu'elle est de type POST
+        if($request->getMethod() == 'POST')
+        {
+            // On fait le lien requête <-> formulaire
+            // A partir de maintenant, la variable $article contient
+            // Les valeurs entrées dans le formulaire par le visiteur
+            $form->submit($request);
+
+            if($form->isValid())
+            {
+                // On enregistre notre objet $article dans la base de données
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+
+                // On redirige vers la page de visualisation de l'article nouvellement crée
+                return $this->redirect(
+                    $this->generateUrl(
+                        'sdzblog_voir', array('slug' => $article->getSlug())
+                    )
+                );
+            }
         }
 
-        // Si on n'est pas en POST, alors on affiche le formulaire
-        return $this->render('SdzBlogBundle:Blog:ajouter.html.twig');
+        // A ce stade :
+        // - Soit la requête est de type GET, donc le visiteur
+        //   vient d'arriver sur la page et veut voir le formulaire
+        // - Soit la requête est de type POST, mais le formulaire n'est
+        //   pas valide, donc on l'affiche de nouveau
+
+        // On passe la méthode createView() du formulaire à la vue
+        // Afin qu'ell puisse afficher le formulaire toute seule
+        return $this->render(
+                        'SdzBlogBundle:Blog:ajouter.html.twig',
+                        array('form' => $form->createView())
+                      );
     }
 
     public function modifierAction($id)
