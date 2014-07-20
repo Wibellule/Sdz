@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sdz\BlogBundle\Entity\Article;
 
+
 class BlogController extends Controller
 {
     public function indexAction($page)
@@ -16,11 +17,13 @@ class BlogController extends Controller
         $articles = $this->getDoctrine()
                          ->getManager()
                          ->getRepository('SdzBlogBundle:Article')
-                         ->getArticles();
+                         ->getArticles(3, $page);
 
         // L'appel de la vue ne change pas
         return $this->render('SdzBlogBundle:Blog:index.html.twig', array(
-            'articles' => $articles
+            'articles'      => $articles,
+            'page'          => $page,
+            'nombrePage'    => ceil(count($articles) / 3)
         ));
     }
 
@@ -28,7 +31,7 @@ class BlogController extends Controller
     {
         // A ce stade, la variable $article contient une instance de la classe Article
         // Avec l'id correspondant à l'id contenu dans la route
-        
+
         // On récupère les articleCompetence pour l'article $article
         $liste_articleCompetence = $this->getDoctrine()
                                         ->getManager()
@@ -64,12 +67,11 @@ class BlogController extends Controller
     public function modifierAction($id)
     {
         // On récupère l'EntityManager
-        $em = $this->getDoctrine()
-            ->getEntityManager();
+        $article = $this->getDoctrine()
+                        ->getManager()
+                        ->getRepository('SdzBlogBundle:Article')
+                        ->find($id);
 
-        // On récupère l'entité correspondant à l'id $id
-        $article = $em->getRepository('SdzBlogBundle:Article')
-            ->find($id);
 
         // Si l'article n'existe pas, on affiche une erreur 404
         if ($article == null) {
@@ -85,13 +87,11 @@ class BlogController extends Controller
 
     public function supprimerAction($id)
     {
-        // On récupère l'EntityManager
-        $em = $this->getDoctrine()
-            ->getEntityManager();
-
         // On récupère l'entité correspondant à l'id $id
-        $article = $em->getRepository('SdzBlogBundle:Article')
-            ->find($id);
+        $article = $this->getDoctrine()
+                        ->getManager()
+                        ->getRepository('SdzBlogBundle:Article')
+                        ->find($id);
 
         // Si l'article n'existe pas, on affiche une erreur 404
         if ($article == null) {
@@ -116,14 +116,14 @@ class BlogController extends Controller
     public function menuAction($nombre)
     {
         $liste = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('SdzBlogBundle:Article')
-            ->findBy(
-                array(),          // Pas de critère
-                array('date' => 'desc'), // On trie par date décroissante
-                $nombre,         // On sélectionne $nombre articles
-                0                // À partir du premier
-            );
+                      ->getManager()
+                      ->getRepository('SdzBlogBundle:Article')
+                      ->findBy(
+                            array(),          // Pas de critère
+                            array('date' => 'desc'), // On trie par date décroissante
+                            $nombre,         // On sélectionne $nombre articles
+                            0                // À partir du premier
+                      );
 
         return $this->render('SdzBlogBundle:Blog:menu.html.twig', array(
             'liste_articles' => $liste // C'est ici tout l'intérêt : le contrôleur passe les variables nécessaires au template !
