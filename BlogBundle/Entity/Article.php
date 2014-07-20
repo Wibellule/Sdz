@@ -22,6 +22,7 @@ class Article
         $this->date = new \DateTime();
         $this->publication = true;
         $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -106,7 +107,7 @@ class Article
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -122,14 +123,14 @@ class Article
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -145,14 +146,14 @@ class Article
     public function setTitre($titre)
     {
         $this->titre = $titre;
-    
+
         return $this;
     }
 
     /**
      * Get titre
      *
-     * @return string 
+     * @return string
      */
     public function getTitre()
     {
@@ -168,14 +169,14 @@ class Article
     public function setAuteur($auteur)
     {
         $this->auteur = $auteur;
-    
+
         return $this;
     }
 
     /**
      * Get auteur
      *
-     * @return string 
+     * @return string
      */
     public function getAuteur()
     {
@@ -191,14 +192,14 @@ class Article
     public function setContenu($contenu)
     {
         $this->contenu = $contenu;
-    
+
         return $this;
     }
 
     /**
      * Get contenu
      *
-     * @return string 
+     * @return string
      */
     public function getContenu()
     {
@@ -214,14 +215,14 @@ class Article
     public function setPublication($publication)
     {
         $this->publication = $publication;
-    
+
         return $this;
     }
 
     /**
      * Get publication
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPublication()
     {
@@ -236,14 +237,14 @@ class Article
     public function setImage(\Sdz\BlogBundle\Entity\Image $image = null)
     {
         $this->image = $image;
-    
+
         return $this;
     }
 
     /**
      * Get image
      *
-     * @return Sdz\BlogBundle\Entity\Image 
+     * @return Sdz\BlogBundle\Entity\Image
      */
     public function getImage()
     {
@@ -259,7 +260,7 @@ class Article
     public function addCategorie(\Sdz\BlogBundle\Entity\Categorie $categories)
     {
         $this->categories[] = $categories;
-    
+
         return $this;
     }
 
@@ -276,7 +277,7 @@ class Article
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCategories()
     {
@@ -305,12 +306,13 @@ class Article
     {
         $this->commentaires->removeElement($commentaires);
         // Et si notre relation était facultative (nullable=true, ce qui n'est pas notre cas)
+        // $commentaire->setArticle(null);
     }
 
     /**
      * Get commentaires
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCommentaires()
     {
@@ -326,14 +328,14 @@ class Article
     public function setDateEdition($dateEdition)
     {
         $this->dateEdition = $dateEdition;
-    
+
         return $this;
     }
 
     /**
      * Get dateEdition
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDateEdition()
     {
@@ -357,14 +359,14 @@ class Article
     public function setNbCommentaires($nbCommentaires)
     {
         $this->nbCommentaires = $nbCommentaires;
-    
+
         return $this;
     }
 
     /**
      * Get nbCommentaires
      *
-     * @return integer 
+     * @return integer
      */
     public function getNbCommentaires()
     {
@@ -380,14 +382,14 @@ class Article
     public function setSlug($slug)
     {
         $this->slug = $slug;
-    
+
         return $this;
     }
 
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
