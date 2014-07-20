@@ -2,6 +2,9 @@
 
 <h3>Formulaire d'article</h3>
 
-<div class="alert alert-success">
-    Ici ce trouvera le formulaire.
+<div class="well">
+    <form method="POST" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <input type="submit" class="btn btn-primary"/>
+    </form>
 </div>
