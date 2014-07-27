@@ -20,6 +20,7 @@ class ArticleType extends AbstractType
             ->add('contenu',    'textarea')
             ->add('auteur',     'text')
             ->add('publication','checkbox', array('required' => false))
+            ->add('image',      new ImageType()) // Formulaire imbriqué
         ;
     }
     
