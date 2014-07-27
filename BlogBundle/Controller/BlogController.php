@@ -7,6 +7,7 @@ namespace Sdz\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sdz\BlogBundle\Entity\Article;
+use Sdz\BlogBundle\Form\ArticleType;
 
 
 class BlogController extends Controller
@@ -54,19 +55,8 @@ class BlogController extends Controller
         $article->setDateEdition(new \DateTime());
         $article->setNbCommentaires(0);
 
-        // On crée le FormBuilder grâce à la méthode du controleur
-        $formBuilder = $this->createFormBuilder($article);
-
-        // On ajoute les champs de l'entité que l'on veut à notre formulaire
-        $formBuilder
-            ->add('date',           'date')
-            ->add('titre',          'text')
-            ->add('contenu',        'textarea')
-            ->add('auteur',         'text')
-            ->add('publication',    'checkbox', array('required' => false));
-
-        // A partir du formBuilder, on génère le formulaire
-        $form = $formBuilder->getForm();
+        // On crée le Form grâce à la méthode du controleur
+        $form = $this->createForm(new ArticleType, $article);
 
         // On récupère la requête
         $request = $this->getRequest();
@@ -121,19 +111,8 @@ class BlogController extends Controller
             throw $this->createNotFoundException('Article[id='.$id.'] inexistant');
         }
 
-        // On construit le formBuilder avec cette instance d'article
-        $formBuilder = $this->createFormBuilder($article);
-
-        // On ajoute les champs de l'entité que l'on veut à notre formulaire
-        $formBuilder
-            ->add('date',           'date')
-            ->add('titre',          'text')
-            ->add('contenu',        'textarea')
-            ->add('auteur',         'text')
-            ->add('publication',    'checkbox', array('required' => false));
-
-        // A partir du formBuilder, on génère le formulaire
-        $form = $formBuilder->getForm();
+        // On construit le form avec cette instance d'article
+        $form = $this->createForm(new ArticleType, $article);
 
         // On récupère la requête
         $request = $this->getRequest();
