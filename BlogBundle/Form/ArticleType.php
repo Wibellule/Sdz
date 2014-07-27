@@ -21,6 +21,13 @@ class ArticleType extends AbstractType
             ->add('auteur',     'text')
             ->add('publication','checkbox', array('required' => false))
             ->add('image',      new ImageType()) // Formulaire imbriqué
+            ->add('categories',  'entity',
+                array(
+                    'class'     => 'SdzBlogBundle:Categorie',
+                    'property'  => 'nom',
+                    'multiple'  => 'true'
+                )
+            )
         ;
     }
     
