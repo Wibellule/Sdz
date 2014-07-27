@@ -4,7 +4,41 @@
 
 <div class="well">
     <form method="POST" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+
+        {# Les erreurs générales du formulaire #}
+        {{ form_errors(form) }}
+
+        <div>
+            {# Génération du label #}
+            {{ form_label(form.titre, "Titre de l'article") }}
+
+            {# Affichage des erreurs pour ce champ précis #}
+            {{ form_errors(form.titre) }}
+
+            {# Génération de l'input #}
+            {{ form_widget(form.titre) }}
+        </div>
+
+        <div>
+            {# Génération du label #}
+            {{ form_label(form.contenu, "Contenu de l'article") }}
+
+            {# Affichage des erreurs pour ce champ précis #}
+            {{ form_errors(form.contenu) }}
+
+            {# Génération de l'input #}
+            {{ form_widget(form.contenu) }}
+        </div>
+
+        {# Génération des champs pas encore écrits
+
+            Dans cet exemple, ce serait "date", "auteur", et "publication",
+            mais aussi le champ CSRF (géré automatiquement par Symfony!)
+            et tous les champs cachés (type "hidden").
+
+        #}
+        {{ form_rest(form) }}
+
         <input type="submit" class="btn btn-primary"/>
     </form>
 </div>
