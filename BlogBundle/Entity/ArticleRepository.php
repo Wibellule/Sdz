@@ -142,4 +142,13 @@ class ArticleRepository extends EntityRepository
 
         return new Paginator($query);
     }
+    
+    public function getSelectList()
+    {
+        $qb = $this->createQueryBuilder('a')
+                   ->where('a.publication = 1'); // On filtre sur l'attribut publication
+
+        // Et on retourne simplement le QueryBuilder, et non la Query, attention
+        return $qb;
+    }
 }
