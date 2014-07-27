@@ -1,8 +1,11 @@
 <?php
 
+// src/Sdz/BlogBundle/Entity/ArticleRepository
+
 namespace Sdz\BlogBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * ArticleRepository
@@ -12,7 +15,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-  public function myFindAll()
+    public function myFindAll()
     {
         $queryBuilder = $this->createQueryBuilder('a');
 
@@ -48,7 +51,7 @@ class ArticleRepository extends EntityRepository
         return $resultats;
 
     }
-    
+
     public function myFindOne($id)
     {
         // On passe par le QueryBuilder vide de l'EntityManager pour l'exemple
@@ -61,7 +64,7 @@ class ArticleRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
-    
+
     public function findByAuteurAndDate($auteur, $annee)
     {
         // On utilise le QueryBuilder crée par le repository directement pour gagner du temps
@@ -77,7 +80,7 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
 
     }
-    
+
     public function whereCurrentYear(\Doctrine\ORM\QueryBuilder $qb)
     {
         $qb->andWhere('a.date BETWEEN :debut AND :fin')
@@ -86,7 +89,7 @@ class ArticleRepository extends EntityRepository
 
         return $qb;
     }
-    
+
     public function myFindAllDQL($id)
     {
         $query = $this->_em->createQuery("SELECT a FROM SdzBlogBundle:Article a WHERE a.id = :id");
@@ -94,7 +97,28 @@ class ArticleRepository extends EntityRepository
         // Utilisation de getSingleResult() car la requête ne doit retourner qu'un seul résultat
         return $query->getSingleResult();
     }
-    
+
+    public function getArticleAvecCommentaires()
+    {
+        $qb = $this->createQueryBuilder('a')
+                   ->leftJoin('a.commentaire','c')
+                   ->addSelect('c');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getAvecCategories(array $nom_categories)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        // On fait une jointure avec l'entité Categorie, avec pour alias "c"
+        $qb->join('a.categorie', 'c')
+           ->where($qb->expr()->in('c.nom', $nom_categories));
+        // Puis on filtre sur le nom des catégories à l'aide d'un IN
+        // Enfin, on retourne le resultat
+        return $qb->getQuery()->getResult();
+    }
+
     public function getArticles($nombrePerPage, $page)
     {
         // On déplace la vérification du numéro de page dans cette méthode

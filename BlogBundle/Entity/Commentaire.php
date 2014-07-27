@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="sdz_commentaire")
  * @ORM\Entity(repositoryClass="Sdz\BlogBundle\Entity\CommentaireRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Commentaire
 {
@@ -151,5 +152,23 @@ class Commentaire
     public function getArticle()
     {
         return $this->article;
+    }
+
+    /**
+     * @ORM\prePersist
+     */
+    public function increase()
+    {
+        $nbCommentaires = $this->getArticle()->getNbCommentaires();
+        $this->getArticle()->setNbCommentaires($nbCommentaires+1);
+    }
+
+    /**
+     * @ORM\preRemove
+     */
+    public function decrease()
+    {
+        $nbCommentaires = $this->getArticle()->getNbCommentaires();
+        $this->getArticle()->setNbCommentaires($nbCommentaires-1);
     }
 }

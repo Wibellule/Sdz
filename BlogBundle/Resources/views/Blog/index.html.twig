@@ -12,10 +12,9 @@
 
     <ul>
         {% for article in articles %}
-            <li>
-                <a href=" {{ path('sdzblog_voir', {'id': article.id} ) }} ">{{ article.titre }}</a>
-                par {{ article.auteur }}, le {{ article.date|date('d/m/Y')}}
-            </li>
+            {# On inclut la vue à chaque itération dans la boucle #}
+            {% include "SdzBlogBundle:Blog:article.html.twig" with {'accueil' : true} %}
+            <hr />
         {% else %}
             <li>Pas (encore !) d'articles</li>
         {% endfor %}
