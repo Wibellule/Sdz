@@ -113,20 +113,58 @@ class BlogController extends Controller
     {
         // On récupère l'EntityManager
         $article = $this->getDoctrine()
-                        ->getManager()
                         ->getRepository('SdzBlogBundle:Article')
                         ->find($id);
-
 
         // Si l'article n'existe pas, on affiche une erreur 404
         if ($article == null) {
             throw $this->createNotFoundException('Article[id='.$id.'] inexistant');
         }
 
-        // Ici, on s'occupera de la création et de la gestion du formulaire
+        // On construit le formBuilder avec cette instance d'article
+        $formBuilder = $this->createFormBuilder($article);
+
+        // On ajoute les champs de l'entité que l'on veut à notre formulaire
+        $formBuilder
+            ->add('date',           'date')
+            ->add('titre',          'text')
+            ->add('contenu',        'textarea')
+            ->add('auteur',         'text')
+            ->add('publication',    'checkbox', array('required' => false));
+
+        // A partir du formBuilder, on génère le formulaire
+        $form = $formBuilder->getForm();
+
+        // On récupère la requête
+        $request = $this->getRequest();
+
+        // On vérifie qu'elle est de type POST
+        if($request->getMethod() == 'POST')
+        {
+            // On fait le lien requête <-> formulaire
+            // A partir de maintenant, la variable $article contient
+            // Les valeurs entrées dans le formulaire par le visiteur
+            $form->submit($request);
+
+            if($form->isValid())
+            {
+                // On enregistre notre objet $article dans la base de données
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+
+                // On redirige vers la page de visualisation de l'article nouvellement crée
+                return $this->redirect(
+                    $this->generateUrl(
+                        'sdzblog_voir', array('slug' => $article->getSlug())
+                    )
+                );
+            }
+        }
 
         return $this->render('SdzBlogBundle:Blog:modifier.html.twig', array(
-            'article' => $article
+            'article' => $article,
+            'form'    => $form->createView()
         ));
     }
 
