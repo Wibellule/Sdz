@@ -8,23 +8,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ArticleType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date')
-            ->add('titre')
-            ->add('auteur')
-            ->add('contenu')
-            ->add('publication')
-            ->add('dateEdition')
-            ->add('nbCommentaires')
-            ->add('slug')
-            ->add('image')
-            ->add('categories')
+            ->add('date',       'date')
+            ->add('titre',      'text')
+            ->add('contenu',    'textarea')
+            ->add('auteur',     'text')
+            ->add('publication','checkbox', array('required' => false))
         ;
     }
     
@@ -43,6 +38,6 @@ class ArticleType extends AbstractType
      */
     public function getName()
     {
-        return 'sdz_blogbundle_article';
+        return 'sdz_blogbundle_articletype';
     }
 }
