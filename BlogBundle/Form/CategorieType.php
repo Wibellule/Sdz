@@ -16,6 +16,14 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('nom', 'text')
+            ->add('article', 'entity',
+                array(
+                    'class'         => 'SdzBlogBundle:Article',
+                    'property'      => 'titre',
+                    'query_builder' => function(\Sdz\BlogBundle\Entity\ArticleRepository $r)
+                        {return $r->getSelectList();}
+                )
+            )
         ;
     }
     
@@ -34,6 +42,6 @@ class CategorieType extends AbstractType
      */
     public function getName()
     {
-        return 'sdz_blogbundle_categorie';
+        return 'sdz_blogbundle_categorietype';
     }
 }
