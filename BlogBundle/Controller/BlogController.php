@@ -4,6 +4,7 @@
 
 namespace Sdz\BlogBundle\Controller;
 
+use Sdz\BlogBundle\Form\ArticleEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Sdz\BlogBundle\Entity\Article;
@@ -112,7 +113,7 @@ class BlogController extends Controller
         }
 
         // On construit le form avec cette instance d'article
-        $form = $this->createForm(new ArticleType, $article);
+        $form = $this->createForm(new ArticleEditType, $article);
 
         // On récupère la requête
         $request = $this->getRequest();
