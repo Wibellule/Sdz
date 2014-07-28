@@ -34,7 +34,7 @@ class ArticleType extends AbstractType
         // On ajoute une fonction qui va écouter l'évènement PRE_SET_DATA
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA, // Ici, on définit l'évènement qui nous intéresse
-            function(FormEvents $event) use ($factory) // Ici on définit une fonction qui sera executé lors de l'évent
+            function(FormEvent $event) use ($factory) // Ici on définit une fonction qui sera executé lors de l'évent
             {
                 // On récupère l'objet
                 $article = $event->getData();
