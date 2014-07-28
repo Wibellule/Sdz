@@ -5,6 +5,8 @@
 namespace Sdz\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraint as Assert;
 
 /**
  * Image
@@ -18,7 +20,7 @@ class Image
 
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -52,7 +54,7 @@ class Image
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,14 +70,14 @@ class Image
     public function setUrl($url)
     {
         $this->url = $url;
-    
+
         return $this;
     }
 
     /**
      * Get url
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -91,23 +93,28 @@ class Image
     public function setAlt($alt)
     {
         $this->alt = $alt;
-    
+
         return $this;
     }
 
     /**
      * Get alt
      *
-     * @return string 
+     * @return string
      */
     public function getAlt()
     {
         return $this->alt;
     }
 
+    public function getFile()
+    {
+        return $this->file;
+    }
+
     // On modifiera le setter de File, pour prendre en compte
     // l'upload d'un fichier lorsqu'il en existe déjà un autre
-    public function setFile($file)
+    public function setFile(UploadedFile $file)
     {
         $this->file = $file;
 
@@ -137,7 +144,7 @@ class Image
 
         // Le nom du fichier est son id, on doit juste stocker également son extension
         // Pour faire propre, on devrait renommer cet attribut en "extension" plutôt que "url"
-        $this->url = $this->file->guessFileExtension();
+        $this->url = $this->file->guessExtension();
 
         // Et on génère l'attribut alt de la balise <img />, à la
         // valeur du nom du fichier sur le PC de l'internaute
@@ -205,9 +212,14 @@ class Image
     protected function getUploadRootDir()
     {
         // On retourne le chemin relatif vers l'image pour notre code PHP
-        return __DIR__.'/../../../../web'.$this->getUploadDir();
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    public function getWebPath()
+    {
+        return $this->getUploadDir().'/'.$this->getId().'.'.$this->getUrl();
     }
 
 
-    
+
 }
