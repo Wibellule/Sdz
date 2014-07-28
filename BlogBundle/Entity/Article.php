@@ -343,7 +343,7 @@ class Article
     }
 
     /**
-     * @ORM\PreUpdate
+     * @ORM\PreUpdate()
      */
     public function updateDate()
     {
