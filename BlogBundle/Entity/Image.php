@@ -145,8 +145,8 @@ class Image
     }
 
     /**
-     * @ORM\PostPersist
-     * @ORM\PostUpdate
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
      */
     public function upload()
     {
@@ -172,6 +172,28 @@ class Image
             $this->id.'.'.$this->url // Le nom du fichier à créer ici "id.extension"
         );
 
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemoveUpload()
+    {
+        // On sauvegarde temporairement le nom du fichier, car il dépend de l'id
+        $this->tempFileName = $this->getUploadRootDir().'/'.$this->id.'.'.$this->url;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        // En PostRemove, on n'a pas accès à l'id, on utilisera notre nom sauvegardé
+        if(file_exists($this->tempFileName))
+        {
+            // On supprime le fichier
+            unlink($this->tempFileName);
+        }
     }
 
     public function getUploadDir()
