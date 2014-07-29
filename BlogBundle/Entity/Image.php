@@ -6,7 +6,7 @@ namespace Sdz\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraint as Assert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Image
@@ -46,6 +46,13 @@ class Image
      */
     private $alt;
 
+    /**
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"image/jpeg", "image/png"},
+     *     mimeTypesMessage = "Merci d'uploader un fichier image jpeg ou png"
+     * )
+     */
     private $file;
 
     // On ajoute cet attribut pour y stocker le nom du fichier
