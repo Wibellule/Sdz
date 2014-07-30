@@ -10,6 +10,6 @@ class BlogControllerTest extends \PHPUnit_Framework_TestCase
 {
     public function testIndexAction()
     {
-    
+        $this->assertTrue(true);
     }
 }
