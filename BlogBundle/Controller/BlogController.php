@@ -175,6 +175,34 @@ class BlogController extends Controller
             'article' => $article
         ));
     }
+    
+    public function testAction()
+    {
+        $article = new Article;
+
+        $article->setDate(new \DateTime()); // Champ date OK
+        $article->setTitre('abc');
+            // incorrect : moins de 10 caractères
+        //$article->setContenu('blabla');
+            // incorrect : on ne le définit pas
+        $article->setAuteur('A');
+            // incorrect : moins de 2 caractères
+
+        // On récupère le service Validator
+        $validator = $this->get('validator');
+
+        // On déclenche la validation
+        $liste_erreurs = $validator->validate($article);
+
+        // Si le tableau n'est pas vide, on affiche les erreurs
+        if(count($liste_erreurs) > 0)
+        {
+            return new Response(print_r($liste_erreurs, true));
+        }else{
+            return new Response("L'article est valide !");
+        }
+
+    }
 
     public function menuAction($nombre)
     {
