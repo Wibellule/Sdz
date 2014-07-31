@@ -6,7 +6,7 @@ namespace Sdz\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Article
@@ -46,7 +46,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
-     * @Assert\MinLength(10)
+     * @Assert\Length(min = "10")
      */
     private $titre;
 
@@ -54,7 +54,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="auteur", type="string", length=255)
-     * @Assert\MinLength(2)
+     * @Assert\Length(min = "2")
      */
     private $auteur;
 
