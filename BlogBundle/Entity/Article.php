@@ -6,6 +6,7 @@ namespace Sdz\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * Article
@@ -45,6 +46,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
+     * @Assert\MinLength(10)
      */
     private $titre;
 
@@ -52,6 +54,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="auteur", type="string", length=255)
+     * @Assert\MinLength(2)
      */
     private $auteur;
 
@@ -59,6 +62,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="contenu", type="text")
+     * @Assert\NotBlank()
      */
     private $contenu;
 
@@ -70,7 +74,8 @@ class Article
     private $publication;
 
     /**
-     * @ORM\OneToOne(targetEntity="Sdz\BlogBundle\Entity\Image", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Sdz\BlogBundle\Entity\Image", cascade={"persist","remove"})
+     * @Assert\Valid()
      */
     private $image;
 
@@ -80,7 +85,7 @@ class Article
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="Sdz\BlogBundle\Entity\Commentaire", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="Sdz\BlogBundle\Entity\Commentaire", mappedBy="article", cascade={"remove"})
      */
     private $commentaires; //Ici commentaires prend un << s >> car un article a plusieurs commentaires
 
