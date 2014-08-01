@@ -7,6 +7,8 @@ namespace Sdz\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+// Indispensable pour la validation par les callbacks
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Article
@@ -14,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="sdz_article")
  * @ORM\Entity(repositoryClass="Sdz\BlogBundle\Entity\ArticleRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @Assert\Callback(methods={"contenuValide})
  */
 class Article
 {
@@ -407,5 +410,19 @@ class Article
     public function isTitre()
     {
         return false;
+    }
+    
+    public function contenuValide(ExecutionContextInterface $context)
+    {
+        $mots_interdits = array('echec', 'abandon');
+        
+        // On vérifie que le contenu ne contient pas l'un des mots
+        if(preg_match('#'.implode('|', $mots_interdits).'#'.$this->getContenu()))
+        {
+            // La rêgle est violée, on définit l'erreur et son message
+            // 1er argument : on dit quel attribut l'erreur concerne, ici "contenu"
+            // 2ème argument : message d'erreur
+            $context->addViolationAt('contenu', 'Contenu invalide car il contient un mot interdit', array(), null);
+        }
     }
 }
