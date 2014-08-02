@@ -51,7 +51,7 @@ class Article
     /**
      * @var string
      *
-     * @ORM\Column(name="titre", type="string", length=255)
+     * @ORM\Column(name="titre", type="string", length=255, unique=true)
      * @Assert\Length(min = "10")
      */
     private $titre;
