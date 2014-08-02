@@ -19,6 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="Sdz\BlogBundle\Entity\ArticleRepository")
  * @ORM\HasLifecycleCallbacks()
  * @Assert\Callback(methods={"contenuValide})
+ * @UniqueEntity(fields="titre", message="Un article existe déjà à avec ce titre.")
  */
 class Article
 {
