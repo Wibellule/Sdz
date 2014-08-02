@@ -9,6 +9,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 // Indispensable pour la validation par les callbacks
 use Symfony\Component\Validator\ExecutionContextInterface;
+// Pour la validation d'un champ unique
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Article
