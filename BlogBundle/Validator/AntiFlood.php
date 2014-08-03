@@ -11,5 +11,5 @@ use Symfony\Component\Validator\Constraint;
  */
 class AntiFlood extends Constraint
 {
-    public $message = "Vous avez déjà posté un message il y a moins de 15 sec, merci de patienter";
+    public $message = "Votre message ' %string% ' est considéré comme flood.";
 }
