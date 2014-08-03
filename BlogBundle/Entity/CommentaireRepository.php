@@ -12,4 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentaireRepository extends EntityRepository
 {
+  public function isFlood($ip, $time)
+    {
+        return true;
+    }
 }
