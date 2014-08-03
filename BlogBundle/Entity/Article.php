@@ -7,6 +7,7 @@ namespace Sdz\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Sdz\BlogBundle\Validator\AntiFlood as AntiFlood;
 // Indispensable pour la validation par les callbacks
 use Symfony\Component\Validator\ExecutionContextInterface;
 // Pour la validation d'un champ unique
@@ -69,6 +70,7 @@ class Article
      *
      * @ORM\Column(name="contenu", type="text")
      * @Assert\NotBlank()
+     * @AntiFlood()
      */
     private $contenu;
 
