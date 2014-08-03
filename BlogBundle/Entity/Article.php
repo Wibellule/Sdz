@@ -420,7 +420,7 @@ class Article
         $mots_interdits = array('echec', 'abandon');
         
         // On vérifie que le contenu ne contient pas l'un des mots
-        if(preg_match('#'.implode('|', $mots_interdits).'#'.$this->getContenu()))
+        if(preg_match('#'.implode('|', $mots_interdits).'#', $this->getContenu()))
         {
             // La rêgle est violée, on définit l'erreur et son message
             // 1er argument : on dit quel attribut l'erreur concerne, ici "contenu"
