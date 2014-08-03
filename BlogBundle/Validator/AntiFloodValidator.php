@@ -16,7 +16,7 @@ class AntiFloodValidator extends ConstraintValidator
         {
             // C'est cette ligne qui déclenche l'erreur pour le formulaire
             // Avec en argument le message
-            $this->context->addViolation($constraint->message);
+            $this->context->addViolation($constraint->message, array('%string%' => $value));
         }
     }
 }
