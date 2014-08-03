@@ -19,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="Sdz\BlogBundle\Entity\ArticleRepository")
  * @ORM\HasLifecycleCallbacks()
  * @Assert\Callback(methods={"contenuValide"})
- * @UniqueEntity(fields="titre", message="Un article existe déjà à avec ce titre.")
+ * @UniqueEntity(fields="titre", message="Un article existe déjà avec ce titre")
  */
 class Article
 {
@@ -406,7 +406,7 @@ class Article
     {
         return $this->slug;
     }
-    
+
     /**
      * @Assert\True()
      */
@@ -414,11 +414,11 @@ class Article
     {
         return false;
     }
-    
+
     public function contenuValide(ExecutionContextInterface $context)
     {
         $mots_interdits = array('echec', 'abandon');
-        
+
         // On vérifie que le contenu ne contient pas l'un des mots
         if(preg_match('#'.implode('|', $mots_interdits).'#', $this->getContenu()))
         {

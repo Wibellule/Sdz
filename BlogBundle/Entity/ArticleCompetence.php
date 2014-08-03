@@ -19,7 +19,7 @@ class ArticleCompetence
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Sdz\BlogBundle\Entity\Competence")
+     * @ORM\ManyToOne(targetEntity="Sdz\BlogBundle\Entity\Competence"))
      */
     private $competence;
 

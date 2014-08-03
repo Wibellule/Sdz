@@ -142,7 +142,7 @@ class ArticleRepository extends EntityRepository
 
         return new Paginator($query);
     }
-    
+
     public function getSelectList()
     {
         $qb = $this->createQueryBuilder('a')
