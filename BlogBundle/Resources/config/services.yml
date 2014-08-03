@@ -8,3 +8,13 @@ services:
     sdz_blog.antispam:
         class: Sdz\BlogBundle\Antispam\SdzAntispam
         arguments: [@mailer, %locale%, 3] # Tableau d'arguments
+    sdz_blog.validator.antiflood: # Le nom du service
+        class: Sdz\BlogBundle\Validator\AntiFloodValidator
+        # La classe du service, ici notre validateur déjà crée
+        arguments: [@request, @doctrine.orm.entity_manager]
+        # Les données qu'on injecte au service: requête + EM
+        scope: request
+        # Comme on utilise la request on doit préciser ce scope
+        tags:
+            - { name: validator.constraint_validator, alias: sdzblog_antiflood }
+            # C'est avec l'alias qu'on retrouvera notre service
