@@ -1,7 +1,7 @@
 Sdz
 ===
 
-Bundle Blog - Symfony 2.3
+Bundle Blog - Symfony 2.5.3
 
 #Bundle de DEV
 
