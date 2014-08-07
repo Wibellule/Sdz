@@ -5,7 +5,6 @@
 namespace Sdz\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class SecurityController extends Controller
@@ -19,7 +18,7 @@ class SecurityController extends Controller
         }
 
         $request = $this->getRequest();
-        $session = $this->getSession();
+        $session = $this->get('Session');
 
         // On vérifie s'il y a des erreurs d'une précédente soumission du formulaire
         if($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR))
