@@ -13,5 +13,6 @@ Bundle Blog - Symfony 2.5.3
 - Des services associés
 - Des évènements Doctrine
 - [prochainement][en cour] Espace utilisateur
+- Et autres fonctionnalités prochainement
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/315324ba-b3c0-45c4-a033-eda2aee0d582/big.png)](https://insight.sensiolabs.com/projects/315324ba-b3c0-45c4-a033-eda2aee0d582)
