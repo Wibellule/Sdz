@@ -13,6 +13,27 @@ class Users implements FixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        
+        // Les noms à créer
+        $noms = array('Wibellule','John','Gyome');
+
+        foreach($noms as $i => $nom)
+        {
+            // On crée l'utilisateur
+            $users[$i] = new User;
+
+            // Le nom d'utilisateur et le mot de passe sont identiques
+            $users[$i]->setUsername($nom);
+            $users[$i]->setPassword($nom);
+
+            // Le sel et les rôles sont vides pour l'instant
+            $users[$i]->setSalt('');
+            $users[$i]->setRoles(array());
+
+            // On le persiste
+            $manager->persist($users[$i]);
+        }
+
+        // On déclenche le flush
+        $manager->flush();
     }
 }
