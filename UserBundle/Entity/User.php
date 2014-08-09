@@ -1,9 +1,12 @@
 <?php
 
+# src/Sdz/UserBundle/Entity/User.php
+
 namespace Sdz\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Entity\User as BaseUser;
+
 
 /**
  * User
@@ -11,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="sdz_user")
  * @ORM\Entity
  */
-class User implements UserInterface
+class User implements BaseUser
 {
     /**
      * @var integer
@@ -20,7 +23,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
