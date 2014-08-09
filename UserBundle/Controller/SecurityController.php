@@ -17,7 +17,7 @@ class SecurityController extends Controller
             return $this->redirect($this->generateUrl('sdzblog_accueil'));
         }
 
-        $request = $this->getRequest();
+        $request = $this->get('Request');
         $session = $this->get('Session');
 
         // On vérifie s'il y a des erreurs d'une précédente soumission du formulaire
