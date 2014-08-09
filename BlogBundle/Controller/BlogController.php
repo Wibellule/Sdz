@@ -69,7 +69,7 @@ class BlogController extends Controller
         $form = $this->createForm(new ArticleType, $article);
 
         // On récupère la requête
-        $request = $this->getRequest();
+        $request = $this->get('Request');
 
         // On vérifie qu'elle est de type POST
         if($request->getMethod() == 'POST')
