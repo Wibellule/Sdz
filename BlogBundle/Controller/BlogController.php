@@ -6,9 +6,11 @@ namespace Sdz\BlogBundle\Controller;
 
 use Sdz\BlogBundle\Form\ArticleEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 use Sdz\BlogBundle\Entity\Article;
 use Sdz\BlogBundle\Form\ArticleType;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class BlogController extends Controller
@@ -51,6 +53,13 @@ class BlogController extends Controller
 
     public function ajouterAction()
     {
+        // On teste que l'utilisateur dispose bien du rôle ROLE_AUTEUR
+        if(!$this->get('security.context')->isGranted('ROLE_AUTEUR'))
+        {
+            // Sinon on déclence une exception " Accès interdit "
+            throw new AccessDeniedHttpException('Accès limité aux auteurs');
+        }
+
         // On crée un nouvel objet Article
         $article = new Article();
         $article->setDateEdition(new \DateTime());
@@ -100,23 +109,13 @@ class BlogController extends Controller
                       );
     }
 
-    public function modifierAction($id)
+    public function modifierAction(Article $article)
     {
-        // On récupère l'EntityManager
-        $article = $this->getDoctrine()
-                        ->getRepository('SdzBlogBundle:Article')
-                        ->find($id);
-
-        // Si l'article n'existe pas, on affiche une erreur 404
-        if ($article == null) {
-            throw $this->createNotFoundException('Article[id='.$id.'] inexistant');
-        }
-
         // On construit le form avec cette instance d'article
-        $form = $this->createForm(new ArticleEditType, $article);
+        $form = $this->createForm(new ArticleEditType(), $article);
 
         // On récupère la requête
-        $request = $this->getRequest();
+        $request = $this->get('Request');
 
         // On vérifie qu'elle est de type POST
         if($request->getMethod() == 'POST')
@@ -133,6 +132,9 @@ class BlogController extends Controller
                 $em->persist($article);
                 $em->flush();
 
+                // On définit un message flash
+                $this->get('session')->getFlashBag()->add('info','Article bien modifié');
+
                 // On redirige vers la page de visualisation de l'article nouvellement crée
                 return $this->redirect(
                     $this->generateUrl(
@@ -148,34 +150,40 @@ class BlogController extends Controller
         ));
     }
 
-    public function supprimerAction($id)
+    public function supprimerAction(Article $article)
     {
-        // On récupère l'entité correspondant à l'id $id
-        $article = $this->getDoctrine()
-                        ->getManager()
-                        ->getRepository('SdzBlogBundle:Article')
-                        ->find($id);
+        // On crée un formulaire vide, qui ne contiendra que le champ CSRF
+        // Cela permet de protéger la suppression d'article contre cette faille
+        $form = $this->createFormBuilder()->getForm();
 
-        // Si l'article n'existe pas, on affiche une erreur 404
-        if ($article == null) {
-            throw $this->createNotFoundException('Article[id='.$id.'] inexistant');
-        }
+        $request = $this->get('Request');
 
-        if ($this->get('request')->getMethod() == 'POST') {
-            // Si la requête est en POST, on supprimera l'article
+        if ($request->getMethod() == 'POST') {
 
-            $this->get('session')->getFlashBag()->add('info', 'Article bien supprimé');
+            $form->submit($request);
+            if($form->isValid())
+            {
+                // On supprime l'article
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($article);
+                $em->flush();
 
-            // Puis on redirige vers l'accueil
-            return $this->redirect( $this->generateUrl('sdzblog_accueil') );
+                // Si la requête est en POST, on supprimera l'article
+                $this->get('session')->getFlashBag()->add('info', 'Article bien supprimé');
+
+                // Puis on redirige vers l'accueil
+                return $this->redirect( $this->generateUrl('sdzblog_accueil') );
+
+            }
         }
 
         // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
         return $this->render('SdzBlogBundle:Blog:supprimer.html.twig', array(
-            'article' => $article
+            'article' => $article,
+            'form'    => $form->createView()
         ));
     }
-    
+
     public function testAction()
     {
         $article = new Article;
