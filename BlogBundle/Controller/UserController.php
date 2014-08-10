@@ -6,9 +6,6 @@ namespace Sdz\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpFoundation\Response;
-
-use FOS\UserBundle\FOSUserBundle;
 
 
 class UserController extends Controller
@@ -25,24 +22,17 @@ class UserController extends Controller
         ));
     }
 
-    public function voirAction(Article $article)
+    public function voirAction($id)
     {
-        // A ce stade, la variable $article contient une instance de la classe Article
-        // Avec l'id correspondant à l'id contenu dans la route
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(
+            array('id' => $id)
+        );
 
-        // On récupère les articleCompetence pour l'article $article
-        $liste_articleCompetence = $this->getDoctrine()
-                                        ->getManager()
-                                        ->getRepository('SdzBlogBundle:ArticleCompetence')
-                                        ->findByArticle($article->getId());
-
-        // Puis modifiez la ligne du render comme ceci, pour prendre en compte les variables :
-        return $this->render('SdzBlogBundle:Blog:voir.html.twig', array(
-            'article'                 => $article,
-            'liste_articleCompetence' => $liste_articleCompetence
-            // Pas besoin de passer les commentaires à la vue, on pourra y accéder via {{ article.commentaires }}
-            // 'liste_commentaires'   => $article->getCommentaires()
+        return $this->render('SdzBlogBundle:User:voir.html.twig', array(
+            'user' => $user
         ));
+
     }
 
     public function ajouterAction()
