@@ -36,3 +36,16 @@ sdzblog_test:
 sdzblog_user_list:
     path: /user-list
     defaults: { _controller: SdzBlogBundle:User:index }
+
+sdzblog_voir_user:
+   path: /voir-user/{id}
+   defaults: { _controller: SdzBlogBundle:User:voir }
+
+sdzblog_modifier_user:
+   path: /modifier-user/{id}
+   defaults: { _controller: SdzBlogBundle:User:modifier }
+
+sdzblog_supprimer_user:
+    path: /supprimer-user/{id}
+    defaults: { _controller: SdzBlogBundle:User:supprimer }
+
