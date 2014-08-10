@@ -7,7 +7,7 @@ namespace Sdz\BlogBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class Ckeditor extends AbstractType
+class CkeditorType extends AbstractType
 {
     /**
      * @param OptionsResolverInterface $resolver
