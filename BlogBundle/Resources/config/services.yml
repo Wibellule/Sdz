@@ -8,6 +8,11 @@ services:
     sdz_blog.antispam:
         class: Sdz\BlogBundle\Antispam\SdzAntispam
         arguments: [@mailer, 3] # Tableau d'arguments
+        calls:
+            # Sert à appeler d'autres méthodes en plus du constructeur
+            - [ setLocale, [%locale%] ]
+            # setLocale -> méthode à executer
+            # %locale% tableau d'arguments à transmettre à la méthode
         tags:
             - { name: twig.extension }
     sdz_blog.validator.antiflood: # Le nom du service
