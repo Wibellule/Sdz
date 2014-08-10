@@ -15,7 +15,7 @@ class CkeditorType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'attr' => 'ckeditor'
+            'attr' => array('class' => 'ckeditor')
         ));
     }
 
