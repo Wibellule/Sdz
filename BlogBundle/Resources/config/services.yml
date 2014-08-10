@@ -7,7 +7,7 @@ services:
 #        arguments: [@service_id, "plain_value", %parameter%]
     sdz_blog.antispam:
         class: Sdz\BlogBundle\Antispam\SdzAntispam
-        arguments: [@mailer, %locale%, 3] # Tableau d'arguments
+        arguments: [@mailer, 3] # Tableau d'arguments
         tags:
             - { name: twig.extension }
     sdz_blog.validator.antiflood: # Le nom du service
@@ -20,3 +20,8 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: sdzblog_antiflood }
             # C'est avec l'alias qu'on retrouvera notre service
+
+    sdz_blog.ckeditor:
+        class: Sdz\BlogBundle\Form\Type\CkeditorType
+        tags:
+            - { name: form.type, alias: ckeditor }
