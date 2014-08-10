@@ -7,6 +7,9 @@ namespace Sdz\BlogBundle\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Request;
+
 class AntiFloodValidator extends ConstraintValidator
 {
     private $request;

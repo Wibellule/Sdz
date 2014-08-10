@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraint;
 class AntiFlood extends Constraint
 {
     public $message = "Votre message ' %string% ' est considéré comme flood.";
-    
+
     public function validateBy()
     {
         return 'sdzblog_antiflood'; // Ici, on fait appel à l'alias du service

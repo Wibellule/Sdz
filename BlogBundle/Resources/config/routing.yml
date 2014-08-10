@@ -32,3 +32,7 @@ sdzblog_supprimer:
 sdzblog_test:
     path: /test
     defaults: { _controller: SdzBlogBundle:Blog:test }
+
+sdzblog_user_list:
+    path: /user-list
+    defaults: { _controller: SdzBlogBundle:User:index }

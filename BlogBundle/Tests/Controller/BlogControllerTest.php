@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // src/Sdz/BlogBundle/Tests/Controller/BlogBundleTest.php
 
