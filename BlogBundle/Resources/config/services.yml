@@ -8,6 +8,8 @@ services:
     sdz_blog.antispam:
         class: Sdz\BlogBundle\Antispam\SdzAntispam
         arguments: [@mailer, %locale%, 3] # Tableau d'arguments
+        tags:
+            - { name: twig.extension }
     sdz_blog.validator.antiflood: # Le nom du service
         class: Sdz\BlogBundle\Validator\AntiFloodValidator
         # La classe du service, ici notre validateur déjà crée
