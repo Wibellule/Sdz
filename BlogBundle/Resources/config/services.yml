@@ -8,6 +8,8 @@ services:
     sdz_blog.antispam:
         class: Sdz\BlogBundle\Antispam\SdzAntispam
         arguments: [@mailer, 3] # Tableau d'arguments
+        # Ce service ne peut pas dépendre d'un autre avec un scope plus restreint
+        scope: request
         calls:
             # Sert à appeler d'autres méthodes en plus du constructeur
             - [ setLocale, [%locale%] ]
