@@ -1,13 +1,35 @@
-{# src/Sdz/UserBundle/Resources/views/User/list.html.twig #}
+{# src/Sdz/UserBundle/Resources/views/User/index.html.twig #}
 
 {# On étant notre layout #}
 {% extends "::layout.html.twig" %}
 
 {% block body %}
 
-    {# Affiche la liste des utilisateurs #}
-    {% for user in users %}
-        {{ user.username }}
-    {% endfor %}
+    <table class="table">
+        <tr>
+            <td>ID</td>
+            <td>UserName</td>
+            <td>Email</td>
+            <td>Actions</td>
+        </tr>
+        {# Affiche la liste des utilisateurs #}
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <a href="{{ path('sdzblog_voir_user', {'id':user.id}) }}"><button type="button" class="btn btn-info">Voir</button></a>
+                    <a href="{{ path('sdzblog_modifier_user', {'id':user.id}) }}"><button type="button" class="btn btn-warning">Modifier</button></a>
+                    <a href="{{ path('sdzblog_supprimer_user', {'id':user.id}) }}"><button type="button" class="btn btn-danger">Supprimer</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    <a href="{{ path('fos_user_register_') }}">
+        <button type="button" class="btn btn-success">Ajouter un utilisateur</button>
+    </a>
 
 {% endblock %}

@@ -1,0 +1,20 @@
+{# src/Sdz/UserBundle/Resources/views/User/list.html.twig #}
+
+{# On étant notre layout #}
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+
+    {# Affiche la liste des utilisateurs #}
+    <form>
+        <label for="disabledInputId">Id utilisateur:</label>
+        <input class="form-control" id="disabledInputId" type="text" placeholder="{{ user.id }}" disabled>
+        <label for="disabledInputUsername">Nom d'utilisateur</label>
+        <input class="form-control" id="disabledInputUsername" type="text" placeholder="{{ user.username }}" disabled>
+        <label for="disabledInputEmail">Email de l'utilisateur</label>
+        <input class="form-control" id="disabledInputEmail" type="text" placeholder="{{ user.email }}" disabled>
+    </form>
+    <br>
+    <a href="{{ path('sdzblog_user_list') }}"><i> << </i>Retour à la liste</a>
+
+{% endblock %}

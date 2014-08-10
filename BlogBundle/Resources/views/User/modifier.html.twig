@@ -1,0 +1,13 @@
+{# src/Sdz/UserBundle/Resources/views/User/list.html.twig #}
+
+{# On étant notre layout #}
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+
+    {# Affiche la liste des utilisateurs #}
+    {% for user in users %}
+        {{ user.username }}
+    {% endfor %}
+
+{% endblock %}
