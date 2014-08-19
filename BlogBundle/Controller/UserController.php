@@ -35,64 +35,6 @@ class UserController extends Controller
 
     }
 
-    public function ajouterAction()
-    {
-        // On teste que l'utilisateur dispose bien du rôle ROLE_AUTEUR
-        if(!$this->get('security.context')->isGranted('ROLE_AUTEUR'))
-        {
-            // Sinon on déclence une exception " Accès interdit "
-            throw new AccessDeniedHttpException('Accès limité aux auteurs');
-        }
-
-        // On crée un nouvel objet Article
-        $article = new Article();
-        $article->setDateEdition(new \DateTime());
-        $article->setNbCommentaires(0);
-
-        // On crée le Form grâce à la méthode du controleur
-        $form = $this->createForm(new ArticleType, $article);
-
-        // On récupère la requête
-        $request = $this->get('Request');
-
-        // On vérifie qu'elle est de type POST
-        if($request->getMethod() == 'POST')
-        {
-            // On fait le lien requête <-> formulaire
-            // A partir de maintenant, la variable $article contient
-            // Les valeurs entrées dans le formulaire par le visiteur
-            $form->submit($request);
-
-            if($form->isValid())
-            {
-                // On enregistre notre objet $article dans la base de données
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
-
-                // On redirige vers la page de visualisation de l'article nouvellement crée
-                return $this->redirect(
-                    $this->generateUrl(
-                        'sdzblog_voir', array('slug' => $article->getSlug())
-                    )
-                );
-            }
-        }
-
-        // A ce stade :
-        // - Soit la requête est de type GET, donc le visiteur
-        //   vient d'arriver sur la page et veut voir le formulaire
-        // - Soit la requête est de type POST, mais le formulaire n'est
-        //   pas valide, donc on l'affiche de nouveau
-
-        // On passe la méthode createView() du formulaire à la vue
-        // Afin qu'ell puisse afficher le formulaire toute seule
-        return $this->render(
-                        'SdzBlogBundle:Blog:ajouter.html.twig',
-                        array('form' => $form->createView())
-                      );
-    }
-
     public function modifierAction(Article $article)
     {
         // On construit le form avec cette instance d'article
