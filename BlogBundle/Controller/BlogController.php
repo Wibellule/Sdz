@@ -191,7 +191,7 @@ class BlogController extends Controller
         $article->setDate(new \DateTime()); // Champ date OK
         $article->setTitre('abc');
             // incorrect : moins de 10 caractères
-        //$article->setContenu('blabla');
+        $article->setContenu('blabla');
             // incorrect : on ne le définit pas
         $article->setAuteur('A');
             // incorrect : moins de 2 caractères
