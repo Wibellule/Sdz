@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 class SecurityController extends Controller
 {
-    public function UserListAction()
+    public function userListAction()
     {
         $userManager = $this->get('fos_user.user_manager');
         $users = $userManager->findUsers();
